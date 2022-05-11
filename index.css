@@ -1,0 +1,102 @@
+.title {
+    font-family: Oswald;
+}
+
+.title-content {
+    font-family: Oswald;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.image1-content {
+    display: flex;
+    width: 40%;
+    flex-direction: column;
+}
+
+.image2-content {
+    display: flex;
+    width: 40%;
+    flex-direction: column;
+}
+
+.buttons {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+.img {
+    /* display: flex;
+    max-width: 90%;
+    justify-content: center;
+    align-items: center; */
+}
+
+.operations-content {
+    display: flex;
+    width: 20%;
+    flex-direction: column;
+}
+
+.options-content-aritm {
+    display: flex;
+    flex-direction: column;
+}
+
+.options-content-logic {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.option {
+    font-family: Oswald;
+    width: 30%;
+    margin-top: 1px;
+    background-color: white;
+    color: black;
+    border: 1px solid;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.option:hover {
+    font-family: Oswald;
+    width: 30%;
+    margin-top: 1px;
+    background-color: black;
+    color: white;
+    border: 1px solid;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.input {
+    width: 30%;
+}
+
+.result-image-content {
+    /* display: flex;
+    width: 25%; */
+}
+
+.btn {
+    font-family: Oswald;
+    height: 40px;
+}
+
+input[type=file] {
+    float: left;
+    display: block;
+}
+.hide {
+    display: none;
+    float: left;
+}

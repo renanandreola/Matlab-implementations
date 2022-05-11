@@ -1,0 +1,97 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="index.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <title>Operações Aritméticas e Lógicas em Imagens</title>
+</head>
+<body>
+  <div>
+    <span class="title">Operações Aritméticas e Lógicas em Imagens</span>
+  </div>
+  <hr>
+
+  <div class="content">
+    <div class="image1-content">
+      <span class="title-content">Imagem A</span>
+      <div>
+        <img id="myImage1" class="img"/>
+      </div>
+      
+      <div class="buttons">
+        <input type="file" id="file1" accept=".png, .jpg, .jpeg"></input>
+      </div>
+    </div>
+
+    <div class="image2-content">
+      <span class="title-content">Imagem B</span>
+      <div>
+        <img id="myImage2" class="img"/>
+      </div>
+      
+      <div class="buttons">
+        <input type="file" id="file2" accept=".png, .jpg, .jpeg"></input>
+      </div>
+    </div>
+
+    <div class="operations-content">
+      
+      <div class="options-content-aritm">
+        <span class="title-content">Operações Aritméticas</span>
+        <br></br>
+        <small id="" class="">Após selecionar as imagens, clique no botão da operação e após 'CALCULAR RESULTADO'.</small>
+        <br></br>
+        <small id="" class="">Nos campos de texto, digite o valor, clique no botão da operação e após 'CALCULAR RESULTADO'.</small>
+        <br></br>
+        <button class="option" onclick="operation('add')">Adição</button>
+        <button class="option" onclick="operation('subt')">Subtração</button>
+        <div>
+          <button class="option" onclick="operation('mult')">Multiplicação</button>
+          <input class="input" type="number" name="" id="mult">
+        </div>
+        <div>
+          <button class="option" onclick="operation('div')">Divisão</button>
+          <input class="input" type="number" name="" id="div">
+        </div>
+        <button class="option" onclick="operation('media')">Média</button>
+        <div>
+          <button class="option" onclick="operation('blend')">Blending</button>
+          <input class="input" type="number" name="" id="blend">
+        </div>
+      </div>
+
+      <div class="options-content-logic">
+        <span class="title-content">Operações Lógicas</span>
+        <button class="option" onclick="operation('and')">AND</button>
+        <button class="option" onclick="operation('or')">OR</button>
+        <button class="option" onclick="operation('xor')">XOR</button>
+        <button class="option" onclick="operation('not')">NOT</button>
+      </div>
+
+      <div class="options-content-logic">
+        <BR></BR>
+        <button class="option" onclick="submit()">CALCULAR RESULTADO</button>
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="result-image-content">
+    <div class="result-content">
+      <span class="title-content">Imagem Resultante</span>
+      <div id="canvas-wrapper" style="width: 512px!important; height: 512px!important"></div>
+      
+      <!-- <div class="buttons">
+        <button class="btn">Salvar Imagem</button>
+      </div> -->
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+  <script src="index.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</body>
+</html>
