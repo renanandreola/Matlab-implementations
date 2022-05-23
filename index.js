@@ -4,7 +4,7 @@ var imageData1;
 var imageData2;
 var result;
 
-document.getElementById('file1').onchange = function (evt) {
+document.getElementById('arquivo1').onchange = function (evt) {
     var tgt = evt.target || window.event.srcElement,
         files = tgt.files;
     if (FileReader && files && files.length) {
@@ -14,7 +14,7 @@ document.getElementById('file1').onchange = function (evt) {
     }
 }
 
-document.getElementById('file2').onchange = function (evt) {
+document.getElementById('arquivo2').onchange = function (evt) {
     var tgt = evt.target || window.event.srcElement,
         files = tgt.files;
     if (FileReader && files && files.length) {
@@ -34,39 +34,16 @@ function showImage2(fileReader) {
     img.src = fileReader.result;
 }
 
-//////////////////////////////////////////////////
+// CREATE PREVIEW
 
-var add = false;
-var subt = false;
-var mult = false;
-var div = false;
-var media = false;
-var blend = false;
-var andd = false;
-var orr = false;
-var xorr = false;
-var nott = false;
+// Ajustar casos de overflow > 255
+const adjustOverFlow = img => img.map(pixel => pixel > 255? pixel % 255: pixel);
 
-function operation(op) {
-    op == 'add' ? add = true : add = false;
-    op == 'subt' ? subt = true : subt = false;
-    op == 'mult' ? mult = true : mult = false;
-    op == 'div' ? div = true : div = false;
-    op == 'media' ? media = true : media = false;
-    op == 'blend' ? blend = true : blend = false;
-    op == 'and' ? andd = true : andd = false;
-    op == 'or' ? orr = true : orr = false;
-    op == 'xor' ? xorr = true : xorr = false;
-    op == 'not' ? nott = true : nott = false;
-}
 
-const resolveOverflow = img => img.map(pixel => pixel > 255? pixel % 255: pixel);
-const resolveUnderflow = img => img.map(pixel => pixel < 0? 0: pixel);
-
-function draw(img, labelText) {
+// mostrar imagem resultante
+function showImageResult(img) {
     const wrapper = document.createElement('div');
     const label = document.createElement('p');
-    label.innerText = labelText;
 
     wrapper.appendChild(label);
     const canvas = document.createElement('canvas');
@@ -89,172 +66,99 @@ function draw(img, labelText) {
     document.getElementById('canvas-wrapper').appendChild(wrapper);
 }
 
-async function submit() {
-    const [data1, data2] = await Promise.all([
-      getImageData('file1', 'myImage1'),
-      getImageData('file2', 'myImage2')
+
+// ajustar casos de pixel menor que 0 - underflow
+const adjustUnderFlow = img => img.map(pixel => pixel < 0? 0: pixel);
+
+var add = false;
+var subt = false;
+var mult = false;
+var div = false;
+var media = false;
+var blend = false;
+var andd = false;
+var orr = false;
+var xorr = false;
+var nott = false;
+
+// operação que vem do front, variaveis criadas acima
+function operation(op) {
+    op == 'add' ? add = true : add = false;
+    op == 'subt' ? subt = true : subt = false;
+    op == 'mult' ? mult = true : mult = false;
+    op == 'div' ? div = true : div = false;
+    op == 'media' ? media = true : media = false;
+    op == 'blend' ? blend = true : blend = false;
+    op == 'and' ? andd = true : andd = false;
+    op == 'or' ? orr = true : orr = false;
+    op == 'xor' ? xorr = true : xorr = false;
+    op == 'not' ? nott = true : nott = false;
+}
+
+// enviar imagem para calcular resultado
+async function sendImage() {
+    const [archive1, archive2] = await Promise.all([
+      getImageData('arquivo1', 'myImage1'),
+      getImageData('arquivo2', 'myImage2')
     ]);
 
+    // se for multiplicação, chama a função referente, assim com os demais
     if (mult) {
-        const multiplyResult = multiply(data1, data2);
-        draw(multiplyResult, 'MULTIPLICAÇÃO');
+        const multiplicationResult = multiply(archive1, archive2);
+        showImageResult(multiplicationResult);
     }
 
     if (div) {
-        const divideResult = divide(data1,data2);
-        draw(divideResult, 'DIVISÃO');
+        const divisionResult = divide(archive1,archive2);
+        showImageResult(divisionResult);
     }
 
     if (add) {
-        const sumResult = sum(data1,data2);
-        draw(sumResult, 'ADIÇÃO');
+        const somaResult = sum(archive1,archive2);
+        showImageResult(somaResult);
     }
 
     if (subt) {
-        const subtractResult = subtract(data1,data2);
-        draw(subtractResult, 'SUBTRAÇÃO');
+        const subtractionResult = subtract(archive1,archive2);
+        showImageResult(subtractionResult);
     }
 
     if (media) {
-        const averageResult = average(data1,data2);
-        draw(averageResult, 'MÉDIA');
+        const mediaResult = mediaa(archive1,archive2);
+        showImageResult(mediaResult);
     }
 
     if (blend) {
-        const averageResult = blending(data1,data2);
-        draw(averageResult, 'BLEND');
+        const mediaResult = blending(archive1,archive2);
+        showImageResult(mediaResult);
     }
 
     if (orr) {
-        const orResult = or(data1,data2);
-        draw(orResult, 'OR');
+        const resultOR = or(archive1,archive2);
+        showImageResult(resultOR);
     }
 
     if (andd) {
-        const andResult = and(data1,data2);
-        draw(andResult, 'AND');
+        const resultAND = and(archive1,archive2);
+        showImageResult(resultAND);
     }
 
     if (xorr) {
-        const xorResult = xor(data1,data2);
-        draw(xorResult, 'XOR');
+        const resultXOR = xor(archive1,archive2);
+        showImageResult(resultXOR);
     }
 
     if (nott) {
-        const notResult = not(data1,data2);
-        draw(notResult, 'NOT');
+        const resultNOT = not(archive1,archive2);
+        showImageResult(resultNOT);
     }
-}
-
-function multiply(matrix1, matrix2) {
-    const result = [];
-    for (let i = 0; i < matrix1.length; i++) {
-      result[i] = matrix1[i] * matrix2[i];
-    }
-
-    var num = $("#mult").val();
-    for (let j = 0; j < result.length; j++) {
-        result[j] = result[j] * parseFloat(num);
-    }
-
-    return resolveOverflow(result);
-}
-
-function blending(matrix1, matrix2) {
-    const result = [];
-    var num = $("#blend").val();
-    for (let i = 0; i < matrix1.length; i++) {
-      result[i] = parseFloat(num) * matrix1[i] + (1 - parseFloat(num)) * matrix2[i];
-    }
-
-    // for (let j = 0; j < result.length; j++) {
-    //     result[j] = result[j] * parseFloat(num);
-    // }
-
-    return resolveOverflow(result);
-}
-
-function sum(matrix1, matrix2) {
-    const result = [];
-    for (let i = 0; i < matrix1.length; i++) {
-      result[i] = matrix1[i] + matrix2[i];
-    }
-
-    return resolveOverflow(result);
-}
-
-function subtract(matrix1, matrix2) {
-    const result = [];
-    for (let i = 0; i < matrix1.length; i++) {
-      result[i] = matrix1[i] - matrix2[i];
-    }
-
-    return resolveUnderflow(result);
-}
-
-function divide(matrix1, matrix2) {
-    const result = [];
-    for (let i = 0; i < matrix1.length; i++) {
-      result[i] = matrix1[i] / matrix2[i];
-    }
-
-    var num = $("#div").val();
-    for (let j = 0; j < result.length; j++) {
-        result[j] = result[j] * parseFloat(num);
-    }
-
-    return resolveUnderflow(result);
-}
-
-function average(matrix1, matrix2) {
-    const result = [];
-    for (let i = 0; i < matrix1.length; i++) {
-      result[i] = (matrix1[i] + matrix2[i]) / 2;
-    }
-
-    return resolveOverflow(result);
-}
-
-function or(matrix1, matrix2) {
-    const result = [];
-    for (let i = 0; i < matrix1.length; i++) {
-        result[i] = (matrix1[i] | matrix2[i]);
-    }
-
-    return resolveOverflow(result);
-}
-
-function and(matrix1, matrix2) {
-    const result = [];
-    for (let i = 0; i < matrix1.length; i++) {
-        result[i] = (matrix1[i] & matrix2[i]);
-    }
-
-    return resolveOverflow(result);
-}
-
-function xor(matrix1, matrix2) {
-    const result = [];
-    for (let i = 0; i < matrix1.length; i++) {
-        result[i] = (matrix1[i] ^ matrix2[i]);
-    }
-
-    return resolveOverflow(result);
-}
-
-function not(matrix1, matrix2) {
-    const result = [];
-    for (let i = 0; i < matrix1.length; i++) {
-      result[i] = matrix1[i] != matrix2[i];
-    }
-
-    return resolveOverflow(result);
 }
 
 function getImageData(inputId, imgId) {
     return new Promise((resolve, reject) => {
       const input = document.getElementById(inputId);
       const img = document.getElementById(imgId)
+
       img.src = URL.createObjectURL(input.files[0]);
       console.log(input.files[0])
       const imgObj = new Image();
@@ -270,4 +174,123 @@ function getImageData(inputId, imgId) {
         return resolve(data.data);
       }, 200);
     });
+}
+
+// realiza a multiplicação
+function multiply(firstMatriz, secondMatriz) {
+    const result = [];
+    for (let i = 0; i < firstMatriz.length; i++) {
+      result[i] = firstMatriz[i] * secondMatriz[i];
+    }
+
+    var num = $("#mult").val();
+    for (let j = 0; j < result.length; j++) {
+        result[j] = result[j] * parseFloat(num);
+    }
+
+    return adjustOverFlow(result);
+}
+
+// realiza o blend
+function blending(firstMatriz, secondMatriz) {
+    const result = [];
+    var num = $("#blend").val();
+    for (let i = 0; i < firstMatriz.length; i++) {
+      result[i] = parseFloat(num) * firstMatriz[i] + (1 - parseFloat(num)) * secondMatriz[i];
+    }
+
+    // for (let j = 0; j < result.length; j++) {
+    //     result[j] = result[j] * parseFloat(num);
+    // }
+
+    return adjustOverFlow(result);
+}
+
+
+// realiza a soma
+function sum(firstMatriz, secondMatriz) {
+    const result = [];
+    for (let i = 0; i < firstMatriz.length; i++) {
+      result[i] = firstMatriz[i] + secondMatriz[i];
+    }
+
+    return adjustOverFlow(result);
+}
+
+
+// realiza a subtração
+function subtract(firstMatriz, secondMatriz) {
+    const result = [];
+    for (let i = 0; i < firstMatriz.length; i++) {
+      result[i] = firstMatriz[i] - secondMatriz[i];
+    }
+
+    return adjustUnderFlow(result);
+}
+
+
+// realiza a divisão
+function divide(firstMatriz, secondMatriz) {
+    const result = [];
+    for (let i = 0; i < firstMatriz.length; i++) {
+      result[i] = firstMatriz[i] / secondMatriz[i];
+    }
+
+    var num = $("#div").val();
+    for (let j = 0; j < result.length; j++) {
+        result[j] = result[j] * parseFloat(num);
+    }
+
+    return adjustUnderFlow(result);
+}
+
+
+// realiza a média
+function mediaa(firstMatriz, secondMatriz) {
+    const result = [];
+    for (let i = 0; i < firstMatriz.length; i++) {
+      result[i] = (firstMatriz[i] + secondMatriz[i]) / 2;
+    }
+
+    return adjustOverFlow(result);
+}
+
+// realiza o OR
+function or(firstMatriz, secondMatriz) {
+    const result = [];
+    for (let i = 0; i < firstMatriz.length; i++) {
+        result[i] = (firstMatriz[i] | secondMatriz[i]);
+    }
+
+    return adjustOverFlow(result);
+}
+
+// realiza o AND
+function and(firstMatriz, secondMatriz) {
+    const result = [];
+    for (let i = 0; i < firstMatriz.length; i++) {
+        result[i] = (firstMatriz[i] & secondMatriz[i]);
+    }
+
+    return adjustOverFlow(result);
+}
+
+// realiza o XOR
+function xor(firstMatriz, secondMatriz) {
+    const result = [];
+    for (let i = 0; i < firstMatriz.length; i++) {
+        result[i] = (firstMatriz[i] ^ secondMatriz[i]);
+    }
+
+    return adjustOverFlow(result);
+}
+
+// realiza o NOT
+function not(firstMatriz, secondMatriz) {
+    const result = [];
+    for (let i = 0; i < firstMatriz.length; i++) {
+      result[i] = firstMatriz[i] != secondMatriz[i];
+    }
+
+    return adjustOverFlow(result);
 }
