@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="index.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
     <title>Operações Aritméticas e Lógicas em Imagens</title>
 </head>
 <body>
@@ -68,7 +68,10 @@
         <button class="option" onclick="operation('and')">AND</button>
         <button class="option" onclick="operation('or')">OR</button>
         <button class="option" onclick="operation('xor')">XOR</button>
-        <button class="option" onclick="operation('not')">NOT</button>
+        <button class="option" onclick="operation('not1')">NOT img 1</button>
+        <button class="option" onclick="operation('not2')">NOT img 2</button>
+        <button class="option" onclick="operation('calcHistImg1')">Histograma imagem 1</button>
+        <!-- <button class="option" onclick="operation('calcHistImg2')">Histograma imagem 2</button> -->
       </div>
 
       <div class="options-content-logic">
@@ -80,6 +83,13 @@
   </div>
 
   <div class="result-image-content">
+
+    <span class="title-hist1"></span>
+    <canvas id="grafico-histograma1"></canvas>
+
+    <span class="title-hist2"></span>
+    <canvas id="grafico-histograma2"></canvas>
+
     <div class="result-content">
       <span class="title-content">Imagem Resultante</span>
       <div id="canvas-wrapper" style="width: 512px!important; height: 512px!important"></div>

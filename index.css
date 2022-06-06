@@ -6,6 +6,14 @@
     font-family: Oswald;
 }
 
+.title-hist1 {
+    font-family: Oswald;
+}
+
+.title-hist2 {
+    font-family: Oswald;
+}
+
 .content {
     display: flex;
     flex-direction: row;
