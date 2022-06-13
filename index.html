@@ -70,8 +70,11 @@
         <button class="option" onclick="operation('xor')">XOR</button>
         <button class="option" onclick="operation('not1')">NOT img 1</button>
         <button class="option" onclick="operation('not2')">NOT img 2</button>
-        <button class="option" onclick="operation('calcHistImg1')">Histograma imagem 1</button>
-        <!-- <button class="option" onclick="operation('calcHistImg2')">Histograma imagem 2</button> -->
+        <button class="option" onclick="operation('calcHistImg1Gray')">Histograma imagem 1 - Escala de cinza</button>
+        <button class="option" onclick="operation('calcHistImg1RGB')">Histograma imagem 1 - RGB</button>
+        <button class="option" onclick="operation('realImg1Min')">Realçe Min Imagem 1</button>
+        <button class="option" onclick="operation('realImg1Max')">Realçe Max Imagem 1</button>
+        <button class="option" onclick="operation('realImg1Media')">Realçe Media Imagem 1</button>
       </div>
 
       <div class="options-content-logic">
@@ -85,10 +88,19 @@
   <div class="result-image-content">
 
     <span class="title-hist1"></span>
-    <canvas id="grafico-histograma1"></canvas>
+    <canvas height="100" width="300" id="grafico-histograma1"></canvas>
 
-    <span class="title-hist2"></span>
-    <canvas id="grafico-histograma2"></canvas>
+    <span class="title-hist1Eq"></span>
+    <canvas height="100" width="300" id="grafico-histogramaEq"></canvas>
+
+    <span class="title-hist1R"></span>
+    <canvas height="100" width="300" id="grafico-histogramaR"></canvas>
+
+    <span class="title-hist1G"></span>
+    <canvas height="100" width="300" id="grafico-histogramaG"></canvas>
+
+    <span class="title-hist1B"></span>
+    <canvas height="100" width="300" id="grafico-histogramaB"></canvas>
 
     <div class="result-content">
       <span class="title-content">Imagem Resultante</span>
