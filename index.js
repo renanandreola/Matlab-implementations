@@ -91,6 +91,7 @@ var calcHistImg1RGB = false;
 var realImg1Min = false;
 var realImg1Max = false;
 var realImg1Media = false;
+var realImg1Mediana = false;
 
 // operação que vem do front, variaveis criadas acima
 function operation(op) {
@@ -110,6 +111,7 @@ function operation(op) {
     op == 'realImg1Min' ? realImg1Min = true : realImg1Min = false;
     op == 'realImg1Max' ? realImg1Max = true : realImg1Max = false;
     op == 'realImg1Media' ? realImg1Media = true : realImg1Media = false;
+    op == 'realImg1Mediana' ? realImg1Mediana = true : realImg1Mediana = false;
 }
 
 // enviar imagem para calcular resultado
@@ -212,6 +214,12 @@ async function sendImage() {
     // se for realce MEDIA
     if (realImg1Media) {
         const realceImg = realceImg1(archive1,archive2, 'media');
+        showImageResult(realceImg);
+    }
+
+    // se for realce MEDIANA
+    if (realImg1Mediana) {
+        const realceImg = realceImg1(archive1,archive2, 'mediana');
         showImageResult(realceImg);
     }
 }
@@ -851,6 +859,12 @@ function realceImg1(firstMatriz, secondMatriz, realceOperation) {
                 var convolucao = unitMax;
             }
 
+            // Se for 'Mediana', realiza a mediana
+            if (realceOperation == 'mediana') {
+                coordenadas.sort((a, b) => b - a);
+                var convolucao = coordenadas[5];
+            }
+
             // Preenche a matriz principal com os valores R
             firstMatriz[k] = convolucao;
 
@@ -924,6 +938,12 @@ function realceImg1(firstMatriz, secondMatriz, realceOperation) {
 
                 unitMax = unitMax / coordenadas.length;
                 var convolucao = unitMax;
+            }
+
+            // Se for 'Mediana', realiza a mediana
+            if (realceOperation == 'mediana') {
+                coordenadas.sort((a, b) => b - a);
+                var convolucao = coordenadas[5];
             }
 
             // Preenche a matriz principal com os valores G
@@ -1000,6 +1020,12 @@ function realceImg1(firstMatriz, secondMatriz, realceOperation) {
 
                 unitMax = unitMax / coordenadas.length;
                 var convolucao = unitMax;
+            }
+
+            // Se for 'Mediana', realiza a mediana
+            if (realceOperation == 'mediana') {
+                coordenadas.sort((a, b) => b - a);
+                var convolucao = coordenadas[5];
             }
 
             // Preenche a matriz principal com os valores B
