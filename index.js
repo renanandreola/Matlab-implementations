@@ -438,7 +438,6 @@ function calculateHistImg1Gray(firstMatriz, secondMatriz) {
     }
 
     for (let j = 0; j < firstMatriz.length; j += 4) {
-        // Como a imagem é em escala de cinza, os valores de R, G e B são os mesmos
         value = firstMatriz[j];
         result1[value]++;
     }
@@ -545,7 +544,7 @@ function equalization1RGB(firstMatriz, resultR, resultG, resultB) {
 
 // Equaliza a imagem escala de cinza
 function equalization1EscalaCinza(firstMatriz, result1) {
-    //Calculando o CFD da imagem
+    //Calculando o CFD
     let CFD = [];
 
     let array_contador = result1;
@@ -556,14 +555,13 @@ function equalization1EscalaCinza(firstMatriz, result1) {
         CFD.push(CFD[i - 1] + array_contador[i]);
     }
 
-    // Função para retornar o menor valor de um array
     Array.min = function(array) {
         return Math.min.apply(Math, array);
     };
 
     let h = [];
 
-    //Percorre cada índice do CFD para montar o h
+    // índice do CFD para montar o h
     for (let i = 0; i < CFD.length; i++) {
         let a = CFD[i] - Array.min(CFD);
         let b = (firstMatriz.length / 4) - Array.min(CFD);
@@ -572,7 +570,7 @@ function equalization1EscalaCinza(firstMatriz, result1) {
         h.push(Math.floor(a / b * c))
     }
 
-    //Percorre cada pixel da imagem. Pula de 4 em 4, pois percorre o RGBA
+    // Pula de 4 em 4, pois percorre o RGBA
     for (let i = 0; i < firstMatriz.length; i += 4) {
         firstMatriz[i] = h[firstMatriz[i]];
 
@@ -598,12 +596,10 @@ function makeGraphic1EscalaCinzaEqualizated(firstMatriz) {
         textsImage1.push(i.toString());
     }
 
-    //Percorre cada pixel da imagem. Pula de 4 em 4, pois percorre o RGBA
     for (let j = 0; j < firstMatriz.length; j += 4) {
-        // Como a imagem é em escala de cinza, os valores de R, G e B são os mesmos
         value = firstMatriz[j];
 
-        // Aumenta o contador de números repetidos nesse índice
+        // Aumenta o contador
         result1[value]++;
     }
 
@@ -862,7 +858,7 @@ function realceImg1(firstMatriz, secondMatriz, realceOperation) {
             // Se for 'Mediana', realiza a mediana
             if (realceOperation == 'mediana') {
                 coordenadas.sort((a, b) => b - a);
-                var convolucao = coordenadas[5];
+                var convolucao = coordenadas[4];
             }
 
             // Preenche a matriz principal com os valores R
